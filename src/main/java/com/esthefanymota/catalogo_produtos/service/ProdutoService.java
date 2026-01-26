@@ -6,10 +6,12 @@ import com.esthefanymota.catalogo_produtos.exception.ProdutoNaoEncontradoExcepti
 import com.esthefanymota.catalogo_produtos.repository.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ProdutoService {
     @Autowired
     private ProdutoRepository repository;
@@ -18,13 +20,9 @@ public class ProdutoService {
         return repository.findByAtivoTrue();
     }
 
-    public ProdutoEntity save(ProdutoEntity ProdutoEntity){
-        return repository.save(ProdutoEntity);
-    }
-
     public ProdutoEntity findById(Long id) {
         Optional<ProdutoEntity> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ProdutoNaoEncontradoException("Objeto não encontrado"));
+        return obj.orElseThrow(() -> new ProdutoNaoEncontradoException("Produto não encontrado"));
     }
 
     public  ProdutoEntity insert(ProdutoEntity obj){
@@ -35,8 +33,14 @@ public class ProdutoService {
     }
 
     public ProdutoEntity fromDTO(ProdutoRequestDTO objDTO){
-        return new ProdutoEntity(objDTO.getId(), objDTO.getNome(), objDTO.getDescricao(),
-                objDTO.getPreco(),objDTO.getAtivo(), objDTO.getImagemUrl());
+        ProdutoEntity entity = new ProdutoEntity();
+        entity.setNome(objDTO.getNome());
+        entity.setDescricao(objDTO.getDescricao());
+        entity.setPreco(objDTO.getPreco());
+        entity.setAtivo(objDTO.getAtivo());
+        entity.setImagemUrl(objDTO.getImagemUrl());
+
+        return entity;
     }
 
     public void deactivate(Long id) {
@@ -59,5 +63,4 @@ public class ProdutoService {
         newObj.setPreco(obj.getPreco());
         newObj.setImagemUrl(obj.getImagemUrl());
     }
-
 }

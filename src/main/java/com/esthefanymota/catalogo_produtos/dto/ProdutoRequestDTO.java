@@ -10,7 +10,6 @@ public class ProdutoRequestDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Long id;
     private String nome;
     private String descricao;
     private BigDecimal preco;
@@ -18,23 +17,6 @@ public class ProdutoRequestDTO implements Serializable {
     private String imagemUrl;
 
     public ProdutoRequestDTO(){}
-
-    public ProdutoRequestDTO(ProdutoEntity object){
-        id = object.getId();
-        nome = object.getNome();
-        descricao = object.getImagemUrl();
-        preco = object.getPreco();
-        ativo = object.getAtivo();
-        imagemUrl = object.getImagemUrl();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
